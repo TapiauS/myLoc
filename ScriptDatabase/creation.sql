@@ -44,6 +44,6 @@ CREATE TABLE borrow(
     id_user INT NOT NULL,
     startdate DATE,
     enddate DATE,
-    FOREIGN KEY(id_item) REFERENCES item(id) ON DELETE CASCADE,
-    FOREIGN KEY(id_user) REFERENCES _user(id) ON DELETE CASCADE
+    FOREIGN KEY(id_item) REFERENCES item(id) ,
+    FOREIGN KEY(id_user) REFERENCES _user(id) 
 );

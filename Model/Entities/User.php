@@ -1,6 +1,6 @@
 <?php
 
-class User{
+class User implements JsonSerializable{
     private int $id;
 
     private String $pseudo;
@@ -179,5 +179,16 @@ class User{
         $this->id = $id;
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            "id"=>$this->id,
+            "pseudo"=>$this->pseudo,
+            "town"=>$this->town,
+            "adress"=>$this->adress,
+            "points"=>$this->points
+        ];
     }
 }

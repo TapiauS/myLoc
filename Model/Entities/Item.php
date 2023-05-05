@@ -1,6 +1,6 @@
 <?php
 
-class Item{
+class Item implements JsonSerializable{
     private int $id;
 
     private User $owner;
@@ -162,5 +162,16 @@ class Item{
         $this->pictureName = $pictureName;
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id'=>$this->id,
+            'idowner'=>$this->owner->getId(),
+            'name'=>$this->name,
+            'description'=>$this->description,
+            'catégorie'=>$this->category
+        ];
     }
 }

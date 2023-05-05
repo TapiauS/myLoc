@@ -1,6 +1,6 @@
 <?php
 
-class Borrow{
+class Borrow implements JsonSerializable{
     private int $id;
     private Item $item;
     private User $borrower;
@@ -129,5 +129,16 @@ class Borrow{
         $this->id = $id;
 
         return $this;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id'=>$this->id,
+            'iditem'=>$this->item->getId(),
+            'idborrower'=>$this->borrower->getId(),
+            'start'=>$this->start,
+            'end'=>$this->end
+        ];
     }
 }
