@@ -36,14 +36,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/coursPHP/GestionnaireContact/index.php?target=allBorrow">Tout les emprunts</a>
                         </li>
-                        <?php if(isset($_GET['item'])):?>
+                        <?php if(isset($_GET['target'])&&$_GET['target']==='item'):?>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Trier par catégorie
-                                </a>
-                                <ul class="dropdown-menu" id="catlist">
-                                    
-                                </ul>
+                                <select id="catlist" class="form-control">
+                                    <option value="">Toutes catégories</option>
+
+                                </select>
                             </li>
                         <?php endif; ?>
                     </ul>

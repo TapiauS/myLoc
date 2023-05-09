@@ -7,9 +7,14 @@ function error(){
                 require_once 'View/logfailedView.php';
                 break;
             case 'invaliditem':
-                require_once 'View/itemFailedView.php';
+                require_once 'View/itemCreationFailedView.php';
+                break;
             case 'deleteitem':
-                require_once 'View/itemFailedView.php';
+                require_once 'View/itemDeletionFailedView.php';
+                break;
+            case 'stillborrowing':
+                require_once 'View/accountDeleteFailedView.php';
+                break;
             default;
         }
     else:

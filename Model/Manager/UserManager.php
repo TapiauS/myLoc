@@ -77,17 +77,19 @@ class UserManager extends Manager{
     }
 
 
-    public static function updateUser(int $id,string $pseudo,string $password,string $adress,string $town):User|false{
+    public static function updateUser(int $id,string $pseudo,string $adress,string $town):bool{
         try{
-            $query="UPDATE _user SET pseudo=:pseudo,password=:password,adress=:adress,town=:town";
+            $query="UPDATE _user SET pseudo=:pseudo,adress=:adress,town=:town WHERE id=:id RETURNING id";
             $pst=self::startquery($query);
             $pst->bindValue('pseudo',$pseudo);
-            $pst->bindValue('password',password_hash($password,PASSWORD_BCRYPT));
             $pst->bindValue('adress',$adress);
             $pst->bindValue('town',$town);
+            $pst->bindValue('id',$id);
             $pst->execute();
             if($row=$pst->fetch())
-                return new User($id,$pseudo,$password,Role::PEON,$town,$adress,0);
+                return true;
+            else 
+                return false;
         }
         catch(PDOException $pdoe){
             if($pdoe->getCode()===23505)
