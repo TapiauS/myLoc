@@ -14,9 +14,9 @@ class Item implements JsonSerializable{
     private ?String $pictureName;
 
 
-    function __construct(int $id,User $owner,?String $description,ItemCategory $category,?String $pictureName)
+    function __construct(int $id,User $owner,?String $description,ItemCategory $category,?String $pictureName,string $name)
     {
-        $this->setId($id)->setOwner($owner)->setDescription($description)->setCategory($category)->setPictureName($pictureName);
+        $this->setName($name)->setId($id)->setOwner($owner)->setDescription($description)->setCategory($category)->setPictureName($pictureName);
     }    
 
 

@@ -15,6 +15,9 @@ function error(){
             case 'stillborrowing':
                 require_once 'View/accountDeleteFailedView.php';
                 break;
+            case 'caterror':
+                require_once 'View/categoriefailView.php';
+                break;
             default;
         }
     else:

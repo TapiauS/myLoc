@@ -131,3 +131,7 @@ function signIn(){
     endif;
     require 'View/signInView.php';
 }
+
+function user(){
+    require_once 'View/userSpaceView.php';
+}

@@ -1,40 +1,42 @@
-const displayer=document.querySelector('#allitems');
-const categorieselector=document.querySelector('#categoriedropdown');
+const displayer=document.querySelector('#itemdisplayer');
+const categorieselector=document.querySelector('#catlist');
 const catlist=document.querySelector('#catlist');
 let categories;
 let items;
 let connected=false;
 
-fetch('/coursPHP/Myloc/isconnected.php').
-    then(response=>response.json).
-    then(json=>connected=json.connected);
+fetch('/Myloc/isconnected.php').
+    then(response=>response.json()).
+    then(data=>connected=data.connected);
 
 
 
 const itemdisplayer=item=>{
     const outerdiv=document.createElement('div');
     outerdiv.className='col-6 col-md-3';
-    displayer.appendChild(outerdiv);
+    displayer.append(outerdiv);
     const carddiv=document.createElement('div');
     carddiv.className='card';
-    outerdiv.appendChild(carddiv);
+    outerdiv.append(carddiv);
     const listbody=document.createElement('ul');
     listbody.className='list-group list-group-flush';
-    carddiv.appendChild(listbody);
+    carddiv.append(listbody);
     const itemname=document.createElement('li');
     itemname.className='list-group-item';
     itemname.innerText='Nom:'+item.name;
-    listbody.appendChild(itemname);
+    console.log(itemname);
+    listbody.append(itemname);
     const description=document.createElement('li');
     itemname.className='list-group-item';
     itemname.innerText='Description:'+item.description;
-    listbody.appendChild(description);
+    listbody.append(description);
     const borrowlistbody=document.createElement('ul');
     borrowlistbody.className='list-group list-group-flush';
-    carddiv.appendChild(borrowlistbody);
-    fetch('/coursPHP/MyLoc/borrowEndPoints.php?iditem='+item.id).
-        then(response=>response.json).
-        then(json=>json.forEach(borrow=>{
+    carddiv.append(borrowlistbody);
+    console.log(item.id);
+    fetch('/MyLoc/borrowEndPoints.php?iditem='+item.id).
+        then(response=>response.json()).
+        then(data=>data.forEach(borrow=>{
             const borrowinfo=document.createElement('li');
             borrowinfo.className='list-group-item';
             borrowinfo.innerText='Début: '+borrow.start+' Fin: '+borrow.end;
@@ -44,28 +46,29 @@ const itemdisplayer=item=>{
     if(connected){
         const button=document.createElement('button');
         button.addEventListener('click',()=>{
-            window.location.href='/coursPHP/MyLoc/index.php?target=borrow&iditem='+item.id;
+            window.location.href='/MyLoc/index.php?target=borrow&iditem='+item.id;
         })
     }
 }
 
-fetch('/coursPHP/itemEndPoints.php').
-    then(response=>response.json).
-    then(json=>json.forEach(
-        cat=>{
+fetch('/MyLoc/categorieEndPoints.php').
+    then(response=>response.json()).
+    then(data=>{
+        data.forEach(cat=>
+        {
             const option=document.createElement('option');
             option.value=cat.name;
             option.innerHTML=cat.name;
-            categorieselector.appendChild(option);
+            categorieselector.append(option);
         }
-    ))
+    )});
 
 
-fetch('/coursPHP/MyLoc/itemEndPoints.php').
-    then(response=>response.json).
-    then(json=>{
-        items=json;
-        json.forEach(item => itemdisplayer(item))
+fetch('/MyLoc/itemEndPoints.php').
+    then(response=>response.json()).
+    then(data=>{
+        items=data;
+        data.forEach(item => itemdisplayer(item))
     });
 
 categorieselector.addEventListener('onchange',()=>{

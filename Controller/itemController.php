@@ -34,7 +34,8 @@ function addItem(){
         endif;
     else:
         header('Location:index.php?target=error');
-    endif;    
+    endif;
+    require_once 'View/itemManagerView.php';    
 }
 
 function removeItem(){

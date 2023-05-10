@@ -16,7 +16,10 @@
                         <?php 
                         if(array_key_exists('user',$_SESSION)):?>
                             <li class="nav-item">
-                                <button id="disconnect">Se deconnecter</button>
+                                <button class='btn btn-primary'id="disconnect">Se deconnecter</button>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/myLoc/index.php?target=userspace">Espace utilisateur</a>
                             </li>
                             <?php if($_SESSION['user']->getRole()===Role::ADMIN):?>
                                 <li class="nav-item">
@@ -37,13 +40,15 @@
                             <a class="nav-link" href="/myLoc/index.php?target=allBorrow">Tout les emprunts</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="/myLoc/index.php?target=allitem">Tout les objets</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/myLoc/index.php">Acceuil</a>
                         </li>
-                        <?php if(isset($_GET['target'])&&$_GET['target']==='item'):?>
+                        <?php if(isset($_GET['target'])&&$_GET['target']==='allitem'):?>
                             <li class="nav-item dropdown">
                                 <select id="catlist" class="form-control">
                                     <option value="">Toutes catégories</option>
-
                                 </select>
                             </li>
                         <?php endif; ?>

@@ -1,4 +1,5 @@
 <?php
+require_once 'Model/Manager/Manager.php';
 $entities='Model/Entities';
 $manager='Model/Manager';
 foreach (glob("$entities/*.php") as $filename) {

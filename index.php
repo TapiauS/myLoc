@@ -29,7 +29,7 @@ try{
                 case 'logout':
                     logout();
                     break;
-                case 'item':
+                case 'allitem':
                     displayItems();
                     break;
                 case 'allBorrow':
@@ -46,11 +46,18 @@ try{
                     break;
                 case 'updateaccount':
                     updateaccount();
+                    break;
                 case 'admincategories':
                     newcategories();
                     break;
                 case 'deleteaccount':
                     deleteaccount();
+                case 'userspace':
+                    user();
+                    break;
+                case 'newitem':
+                    addItem();
+                    break;
                 case 'error':
                     error();
                     break;
