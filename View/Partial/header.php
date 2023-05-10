@@ -18,23 +18,26 @@
                             <li class="nav-item">
                                 <button id="disconnect">Se deconnecter</button>
                             </li>
-                            <?php if($_SESSION['user']===Role::ADMIN):?>
+                            <?php if($_SESSION['user']->getRole()===Role::ADMIN):?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/coursPHP/GestionnaireContact/index.php?target=admincategories">Gerer les catégories</a>
+                                    <a class="nav-link" href="/myLoc/index.php?target=admincategories">Gerer les catégories</a>
                                 </li>
                             <?php endif;?>
                         <?php else: ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="/coursPHP/GestionnaireContact/index.php?target=connect">Se Connecter</a>
+                                <a class="nav-link" href="/myLoc/index.php?target=connect">Se Connecter</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/coursPHP/GestionnaireContact/index.php?target=signin">Creer un compte</a>
+                                <a class="nav-link" href="/myLoc/index.php?target=signin">Creer un compte</a>
                             </li>
                         <?php   
                         endif;
                         ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/coursPHP/GestionnaireContact/index.php?target=allBorrow">Tout les emprunts</a>
+                            <a class="nav-link" href="/myLoc/index.php?target=allBorrow">Tout les emprunts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/myLoc/index.php">Acceuil</a>
                         </li>
                         <?php if(isset($_GET['target'])&&$_GET['target']==='item'):?>
                             <li class="nav-item dropdown">

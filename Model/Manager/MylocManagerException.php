@@ -3,7 +3,7 @@
 class MylocManagerException extends Exception{
     private int $lvl;
 
-    function __construct(string $message,int $level=0,$code=0,Exception $previous)
+    function __construct(string $message,Exception $previous,int $level=0,$code=0)
     {
         $this->setLvl($level);
         parent::__construct($message,$code,$previous);

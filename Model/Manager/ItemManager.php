@@ -26,7 +26,7 @@ class ItemManager extends Manager{
             $pst->bindValue('id',$id);
             $pst->execute();
             if($row=$pst->fetch())
-                return new Item($id,)
+                return new Item($id);
         }
         catch(PDOException $pdoe){
             //todo gérer
@@ -39,10 +39,9 @@ class ItemManager extends Manager{
             $pst=self::startquery($query);
             $pst->bindValue('id',$id);
             $pst->execute();
-            
             $borrows=BorrowManager::getAllBorrow(ItemManager::getItem($id));
-            foreach()
-            return true;
+
+                return true;
         }
         catch(PDOException $pdoe){
             if($pdoe->getCode()===23503)

@@ -46,7 +46,7 @@ class BorrowManager extends Manager{
             $pst->execute();
             $retour=[];
             while($row=$pst->fetch()){
-                $borrow=new Borrow($row['id'],UserManager::getUser($row['id_user']),DateTime::createFromFormat('Y-m-d',$row['startdate']),DateTime::createFromFormat('Y-m-d',$row['enddate']),$borrowedItem);
+                $borrow=new Borrow($row['id'],UserManager::getUser($row['id_user']),DateTime::createFromFormat('Y-m-d',$row['startdate']),DateTime::createFromFormat('Y-m-d',$row['enddate']),$borroweditem);
                 array_push($retour,$borrow);
             }
             return $retour;

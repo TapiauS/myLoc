@@ -1,7 +1,7 @@
 <?php
 
 require_once 'View/Partial/header.php';
-if($isset($_GET['cause']))
+if(isset($_GET['cause']))
     if($_GET['cause']==='notavailable')
         echo "<p>Mot de passe ou pseudo non disponible</p>"; 
     else

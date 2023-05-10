@@ -83,7 +83,7 @@ function connect(){
         define("PASSWORD",sanitize($_POST["password"]));
         define("PSEUDOREGEX","/^[a-zA-Z'-]+$/");
         $user=UserManager::connectUser(PSEUDO,PASSWORD);
-        if(!$user){
+        if($user){
             $_SESSION["user"]=$user;
             header("Location:index.php");
         }
@@ -98,20 +98,25 @@ function connect(){
 }
 
 function logout(){
-    unset($_SESSION['user']);
-    header("Location:index.php");
+    $success=UserManager::disconnectuser($_SESSION['user']->getId());
+    if($success):
+        unset($_SESSION['user']);
+        header("Location:index.php");
+    else:
+        header("Location:index.php?target=error");
+    endif;
 }
 
 function signIn(){
     if(isset($_POST)&&!empty($_POST)):
         define("PSEUDO",sanitize($_POST["pseudo"]));
         define("PASSWORD",sanitize($_POST["password"]));
-        define('PSEUDOREGEX','/^[a-z]{3,10}$/');
+        define('PSEUDOREGEX','/[a-z]$/');
         define('MDPREGEX','/^.{10,}$/');
         define("ADRESS",sanitize($_POST["adress"]));
         define("TOWN",sanitize($_POST['town']));
-
-        $success=preg_match(PSEUDOREGEX,PSEUDO)&&preg_match(MDPREGEX,PASSWORD);
+        
+        $success=preg_match(PSEUDOREGEX,PSEUDO)&&(strlen(PASSWORD)>8);
         if($success):
             $user=UserManager::createUser(PSEUDO,PASSWORD,ADRESS,TOWN);
             if(!is_null($user)):

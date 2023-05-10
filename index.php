@@ -1,5 +1,5 @@
 <?php
-
+require_once 'Model/Manager/Manager.php';
 $controller = 'Controller';
 $entities='Model/Entities';
 $manager='Model/Manager';
@@ -20,7 +20,7 @@ try{
         if(isset($_GET['target'])):
             $target=$_GET['target'];
             switch($target){
-                case 'login':
+                case 'connect':
                     connect();
                     break;
                 case 'signin':
@@ -46,6 +46,9 @@ try{
                     break;
                 case 'updateaccount':
                     updateaccount();
+                case 'admincategories':
+                    newcategories();
+                    break;
                 case 'deleteaccount':
                     deleteaccount();
                 case 'error':
