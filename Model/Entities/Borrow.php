@@ -137,8 +137,8 @@ class Borrow implements JsonSerializable{
             'id'=>$this->id,
             'item'=>$this->item,
             'borrower'=>$this->borrower,
-            'start'=>$this->start,
-            'end'=>$this->end
+            'start'=>$this->start->format('Y-m-d'),
+            'end'=>$this->end->format('Y-m-d')
         ];
     }
 }

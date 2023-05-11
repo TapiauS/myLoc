@@ -20,6 +20,7 @@ if(isset($_GET['filter'])&&$_GET['filter']==='myself'&&isset($_SESSION['user']))
     }
     header('Content-Type: application/json');
     echo json_encode($items);
+    exit;
 }
 
 if(isset($_GET['filter'])&&isset($_GET['iduser'])&&$_GET['filter']==='oneuser'):

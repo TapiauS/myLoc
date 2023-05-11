@@ -171,7 +171,8 @@ class Item implements JsonSerializable{
             'idowner'=>$this->owner->getId(),
             'name'=>$this->name,
             'description'=>$this->description,
-            'catégorie'=>$this->category
+            'categorie'=>$this->category,
+            'picture'=>$this->pictureName
         ];
     }
 }

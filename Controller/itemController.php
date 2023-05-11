@@ -40,9 +40,9 @@ function addItem(){
 
 function removeItem(){
     if(isset($_SESSION['user'])):
-        if(isset($_GET['idit'])):
-            if(isavailable(ItemManager::getItem($_GET['idit']),new DateTime())&&ItemManager::deleteItem($_GET['idit']))
-                header('Location:index.php?target=items');
+        if(isset($_GET['iditem'])):
+            if(isavailable(ItemManager::getItem($_GET['iditem']),new DateTime(),new DateTime())&&ItemManager::deleteItem($_GET['iditem']))
+                header('Location:index.php?target=userspace');
             else
                 header('Location:index.php?target=error&errortype=deleteitem');
         else:

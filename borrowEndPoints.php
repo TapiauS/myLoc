@@ -12,6 +12,7 @@ foreach (glob("$manager/*.php") as $filename) {
 session_start();
 
 try{
+    $borrows=[];
     if(!isset($_GET['iditem'])):
         $borrows=BorrowManager::getBorrowedItem($_SESSION['user']);
     else:

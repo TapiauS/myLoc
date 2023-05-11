@@ -65,19 +65,21 @@ class ItemCategoryManager extends Manager{
         }
     }
 
-    public static function updateCategory(string $name,int $associatedPoints):ItemCategory|false{
+    public static function updateCategory(string $name,int $associatedPoints,int $id):bool{
         try{
-            $query="UPDATE TABLE category_item SET category_name=:name,associated_points=:associatedpoints RETURNING id";
+            $query="UPDATE category_item SET category_name=:name,associated_points=:associatedpoints WHERE id=:id";
             $pst=self::startquery($query);
             $pst->bindValue('name',$name);
+            $pst->bindValue('id',$id);
             $pst->bindValue('associatedpoints',$associatedPoints);
             $pst->execute();
-            if($row=$pst->fetch())
-                return new ItemCategory($row['id'],$name,$associatedPoints);
+            return true;
         }
         catch(PDOException $pdoe){
             if($pdoe->getCode()===23505||$pdoe->getCode()===23514)
                 return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe);
         }
     }
 }

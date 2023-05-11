@@ -18,36 +18,42 @@ const itemdisplayer=item=>{
     const carddiv=document.createElement('div');
     carddiv.className='card';
     outerdiv.append(carddiv);
-    const listbody=document.createElement('ul');
-    listbody.className='list-group list-group-flush';
+    const listbody=document.createElement('div');
+    listbody.className='card-body';
     carddiv.append(listbody);
-    const itemname=document.createElement('li');
-    itemname.className='list-group-item';
+    const itemimage=document.createElement('img');
+    itemimage.className='card-img-top';
+    itemimage.alt='Image de '+item.name;
+    itemimage.src='Images/'+item.picture;
+    carddiv.append(itemimage);
+    const itemname=document.createElement('h5');
+    itemname.className='card-title';
     itemname.innerText='Nom:'+item.name;
-    console.log(itemname);
     listbody.append(itemname);
-    const description=document.createElement('li');
-    itemname.className='list-group-item';
-    itemname.innerText='Description:'+item.description;
+    const description=document.createElement('p');
+    description.className='card-text';
+    description.innerText='Description:'+item.description;
     listbody.append(description);
     const borrowlistbody=document.createElement('ul');
     borrowlistbody.className='list-group list-group-flush';
     carddiv.append(borrowlistbody);
-    console.log(item.id);
     fetch('/MyLoc/borrowEndPoints.php?iditem='+item.id).
         then(response=>response.json()).
         then(data=>data.forEach(borrow=>{
             const borrowinfo=document.createElement('li');
             borrowinfo.className='list-group-item';
             borrowinfo.innerText='Début: '+borrow.start+' Fin: '+borrow.end;
-            borrowlistbody.append('borrowinfo');
+            borrowlistbody.append(borrowinfo);
         }))
         .catch(error=>console.error(error));
     if(connected){
         const button=document.createElement('button');
         button.addEventListener('click',()=>{
             window.location.href='/MyLoc/index.php?target=borrow&iditem='+item.id;
-        })
+        });
+        button.className="btn btn-primary";
+        button.innerText='Reserver';
+        carddiv.append(button);
     }
 }
 
@@ -71,11 +77,11 @@ fetch('/MyLoc/itemEndPoints.php').
         data.forEach(item => itemdisplayer(item))
     });
 
-categorieselector.addEventListener('onchange',()=>{
+categorieselector.addEventListener('click',()=>{
     displayer.innerHTML='';
     if(categorieselector.value!='')
         items.forEach(item => {
-            if(categorieselector.value===item.categorie)
+            if(categorieselector.value===item.categorie.name)
                 itemdisplayer(item);
         });
     else

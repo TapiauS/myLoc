@@ -35,17 +35,18 @@ class ItemManager extends Manager{
 
     public static function deleteItem(int $id):bool{
         try{
-            $query='DELETE FROM item WHERE id=:id';
+            $query='DELETE FROM item WHERE id=:id AND id_user=:iduser';
             $pst=self::startquery($query);
             $pst->bindValue('id',$id);
+            $pst->bindValue('iduser',$_SESSION['user']->getId());
             $pst->execute();
-            $borrows=BorrowManager::getAllBorrow(ItemManager::getItem($id));
-
-                return true;
+            return true;
         }
         catch(PDOException $pdoe){
             if($pdoe->getCode()===23503)
                 return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe);
         }
     }
 
@@ -70,9 +71,9 @@ class ItemManager extends Manager{
         }
     }
 
-    public static function updateItem(string $name,?string $description,int $idCategorie,?string $picturePath):Item|false{
+    public static function updateItem(string $name,?string $description,int $idCategorie,?string $picturePath,int $id):Item|false{
         try{
-            $query='UPDATE item SET name=:name,description=:description,picture_path=:picturepath,id_category_item=;idcat RETURNING id';
+            $query='UPDATE item SET name=:name,description=:description,picture_path=:picturepath,id_category_item=;idcat WHERE id=:id AND id_user=:iduser';
             $pst=self::startquery($query);
             $pst->bindValue('name',$name);
             $pst->bindValue('description',$description);

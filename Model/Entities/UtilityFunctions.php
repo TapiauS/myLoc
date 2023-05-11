@@ -7,10 +7,13 @@ function sanitize(?String $text):String{
         return "";
 }
 
-function isavailable(Item $item,DateTime $moment):bool{
+function isavailable(Item $item,DateTime $start,DateTime $end):bool{
+    if($start->format('d')<(new DateTime())->format('d')){
+        return false;
+    }
     $borrows=BorrowManager::getAllBorrow($item);
     foreach($borrows as $borrow){
-        if($moment<$borrow->getEnd()):
+        if($borrow->getStart()<=$start && $start<=$borrow->getEnd() || $borrow->getStart()<=$end && $end<=$borrow->getEnd()||$borrow->getStart()>=$start&&$borrow->getEnd()<=$end):
             return false;
         endif;
     }

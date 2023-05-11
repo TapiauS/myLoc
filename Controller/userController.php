@@ -19,15 +19,15 @@ function updateaccount(){
             if($user->getRole()===Role::ADMIN):
                 if(isset($_GET['iduser'])):
                     define("PSEUDO",sanitize($_POST["pseudo"]));
-                    define('PSEUDOREGEX','/^[a-z]{3,10}$/');
+                    define('PSEUDOREGEX','/[a-z]$/');
                     define("ADRESS",sanitize($_POST["adress"]));
                     define("TOWN",sanitize($_POST['town']));
             
-                    $success=preg_match(PSEUDOREGEX,PSEUDO)&&preg_match(MDPREGEX,PASSWORD);
+                    $success=preg_match(PSEUDOREGEX,PSEUDO);
                     if($success):
                         $udpated=UserManager::updateUser($_GET['iduser'],PSEUDO,ADRESS,TOWN);
                         if($udpated):
-                            header("Location:index.php");
+                            header("Location:index.php?target=userspace");
                         else:
                             header("Location:index.php?target=error&errortype=wronglog&cause=notavailable");
                         endif;
@@ -36,15 +36,16 @@ function updateaccount(){
                     endif;
                 else:
                     define("PSEUDO",sanitize($_POST["pseudo"]));
-                    define('PSEUDOREGEX','/^[a-z]{3,10}$/');
+                    define('PSEUDOREGEX','/[a-z]$/');
                     define("ADRESS",sanitize($_POST["adress"]));
                     define("TOWN",sanitize($_POST['town']));
             
-                    $success=preg_match(PSEUDOREGEX,PSEUDO)&&preg_match(MDPREGEX,PASSWORD);
+                    $success=preg_match(PSEUDOREGEX,PSEUDO);
                     if($success):
-                        $udpated=UserManager::updateUser($_SESSION['iduser']->getId(),PSEUDO,ADRESS,TOWN);
+                        $udpated=UserManager::updateUser($_SESSION['user']->getId(),PSEUDO,ADRESS,TOWN);
                         if($udpated):
-                            header("Location:index.php");
+                            $_SESSION['user']->setPseudo(PSEUDO);
+                            header("Location:index.php?target=userspace");
                         else:
                             header("Location:index.php?target=error&errortype=wronglog&cause=notavailable");
                         endif;
@@ -54,15 +55,16 @@ function updateaccount(){
                 endif;
             else:
                 define("PSEUDO",sanitize($_POST["pseudo"]));
-                define('PSEUDOREGEX','/^[a-z]{3,10}$/');
+                define('PSEUDOREGEX','/[a-z]$/');
                 define("ADRESS",sanitize($_POST["adress"]));
                 define("TOWN",sanitize($_POST['town']));
         
-                $success=preg_match(PSEUDOREGEX,PSEUDO)&&preg_match(MDPREGEX,PASSWORD);
+                $success=preg_match(PSEUDOREGEX,PSEUDO);
                 if($success):
                     $udpated=UserManager::updateUser($_SESSION['iduser']->getId(),PSEUDO,ADRESS,TOWN);
                     if($udpated):
-                        header("Location:index.php");
+                        $_SESSION['user']->setPseudo(PSEUDO);
+                        header("Location:index.php?target=userspace");
                     else:
                         header("Location:index.php?target=error&errortype=wronglog&cause=notavailable");
                     endif;

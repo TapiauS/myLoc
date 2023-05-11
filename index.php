@@ -32,6 +32,9 @@ try{
                 case 'allitem':
                     displayItems();
                     break;
+                case 'deleteitem':
+                    removeitem();
+                    break;
                 case 'allBorrow':
                     if(isset($_SESSION['user']))
                         displayOneUserBorrow();
@@ -44,14 +47,22 @@ try{
                     else
                         header('Location:index.php?target=error');
                     break;
+                case 'submitborrow':
+                    submitBorrow();
+                    break;
                 case 'updateaccount':
                     updateaccount();
                     break;
                 case 'admincategories':
-                    newcategories();
-                    break;
+                    if(isset($_SESSION['user'])&&$_SESSION['user']->getRole()===Role::ADMIN):
+                        categories();
+                        break;
+                    else:
+                        header('Location:index.php?target=error');
+                    endif;
                 case 'deleteaccount':
                     deleteaccount();
+                    break;
                 case 'userspace':
                     user();
                     break;

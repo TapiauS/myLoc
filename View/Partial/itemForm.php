@@ -9,7 +9,8 @@
     </select>
 
     <label for="item_image">Photo de l'objet:</label>
-    <input type="file" id="item_image" name="item_image" accept="image/*" ><br><br>
+    <input type="file" id="item_image" name="picture" accept="image/*" ><br><br>
 
+    
     <input type="submit" value="Submit">
 </form>

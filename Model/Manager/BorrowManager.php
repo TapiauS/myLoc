@@ -16,7 +16,10 @@ class BorrowManager extends Manager{
             return $retour;
         }
         catch(PDOException $pdoe){
-            //todo gérer
+            if($pdoe->getCode()===23503)
+                return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
         }
     }
 
@@ -34,13 +37,16 @@ class BorrowManager extends Manager{
             return $retour;
         }
         catch(PDOException $pdoe){
-            //todo tkt
+            if($pdoe->getCode()===23503)
+                return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
         }
     }
 
     public static function getAllBorrow(Item $borroweditem){
         try{
-            $query="SELCT * FROM borrow WHERE id_item=:id";
+            $query="SELECT * FROM borrow WHERE id_item=:id";
             $pst=self::startquery($query);
             $pst->bindValue('id',$borroweditem->getId());
             $pst->execute();
@@ -52,7 +58,10 @@ class BorrowManager extends Manager{
             return $retour;
         }
         catch(PDOException $pdoe){
-            //todo tkt
+            if($pdoe->getCode()===23503)
+                return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
         }
     }
 
@@ -62,8 +71,8 @@ class BorrowManager extends Manager{
             $pst=self::startquery($query);
             $pst->bindValue('idItem',$borrowedItem->getId());
             $pst->bindValue('idUser',$borrower->getId());
-            $pst->bindValue('start',$startDate,PDO::PARAM_STR);
-            $pst->bindValue('end',$endDate,PDO::PARAM_STR);
+            $pst->bindValue('start',$startDate->format('Y-m-d'));
+            $pst->bindValue('end',$endDate->format('Y-m-d'));
             $pst->execute();
             if($row=$pst->fetch())
                 return new Borrow($row['id'],$borrower,$startDate,$endDate,$borrowedItem);
@@ -71,6 +80,8 @@ class BorrowManager extends Manager{
         catch(PDOException $pdoe){
             if($pdoe->getCode()===23505||$pdoe->getCode()===23514)
                 return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
         }
     }
 
@@ -86,6 +97,8 @@ class BorrowManager extends Manager{
         catch(PDOException $pdoe){
             if($pdoe->getCode()===23505||$pdoe->getCode()===23514)
                 return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
         }
     }
 }
