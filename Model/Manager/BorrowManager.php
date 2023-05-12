@@ -101,4 +101,39 @@ class BorrowManager extends Manager{
                 throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
         }
     }
+
+    public static function deleteBorrow(int $id):bool{
+        try{
+            $query='DELETE FROM borrow WHERE id=:id AND id_user=:iduser';
+            $pst=self::startquery($query);
+            $pst->bindValue('id',$id);
+            $pst->bindValue('iduser',$_SESSION['user']->getId());
+            $pst->execute();
+            return true;
+        }
+        catch(PDOException $pdoe){
+            if($pdoe->getCode()===23505||$pdoe->getCode()===23514)
+                return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
+        }
+    }
+
+    public static function getBorrow(int $id):Borrow|false{
+        try{
+        $query='SELECT * FROM borrow WHERE id=:id';
+        $pst=self::startquery($query);
+        $pst->bindValue('id',$id);
+        $pst->execute();
+        if($row=$pst->fetch())
+            var_dump($row);
+            return new Borrow($id,UserManager::getUser($row['id_user']),DateTime::createFromFormat('Y-m-d',$row['startdate']),DateTime::createFromFormat('Y-m-d',$row['enddate']),ItemManager::getItem($row['id_item']));
+        }
+        catch(PDOException $pdoe){
+            if($pdoe->getCode()===23505||$pdoe->getCode()===23514)
+                return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
+        }
+    }
 }

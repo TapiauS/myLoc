@@ -44,5 +44,17 @@ fetch('borrowEndPoints.php').
         itemdiv.className='row';
         itemdisplayer(borrow.item,itemdiv);
         outeritemdiv.appendChild(itemdiv);
+        const deleteButton=document.createElement('button');
+        if(!(Date.parse(borrow.start)<Date.now()&&Date.now()<Date.parse(borrow.end)))
+        {
+            deleteButton.className='btn btn-primary';
+            deleteButton.innerText='Supprimer la reservation';
+            deleteButton.addEventListener('click',()=>{
+                if(confirm('VOulez vous vraiment supprimer cet emprunt')){
+                    window.location.href='index.php?target=deleteborrow&idborrow='+borrow.id;
+                }
+            })
+            outerborrowdiv.appendChild(deleteButton);
+        }
     })
     });

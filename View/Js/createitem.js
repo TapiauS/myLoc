@@ -21,9 +21,7 @@ form.addEventListener('submit',event=>{
     success=namefield.value!==''&&catlist.value!=='';
     if(success)
         HTMLFormElement.prototype.submit.call(form);
-    
     else
-        alert('Le nom ne peut pas être vide et la catégorie doit être sélectionée')
-    
+        alert('Le nom ne peut pas être vide et la catégorie doit être sélectionée') 
 })
 

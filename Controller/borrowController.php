@@ -37,14 +37,23 @@ function submitBorrow(){
     endif; 
 }
 
-function displayAllBorrow(){
-
+function deleteBorrow(){
+    if(isset($_SESSION['user'])&&isset($_GET['idborrow'])):
+        $borrow=BorrowManager::getBorrow(intval($_GET['idborrow']));
+        var_dump($borrow->getStart()->format('Y-m-d')<(new DateTime())->format('Y-m-d'));
+        if($borrow&&!($borrow->getStart()<(new DateTime())->format('Y-m-d')&&(new DateTime())->format('Y-m-d')<$borrow->getEnd())):
+            $success=BorrowManager::deleteBorrow(intval($_GET['idborrow']));
+            if($success)
+                header('Location:index.php?target=allBorrow');
+            else
+                header('Location:index.php?target=error');
+        else:
+            // header('Location:index.php?target=error');
+        endif;
+    endif;
 }
 
 function displayOneUserBorrow(){
     require_once 'View/allBorrowView.php';
 }
 
-function displayOneItemBorrow(){
-    
-}

@@ -104,6 +104,25 @@ class UserManager extends Manager{
         }
     }
 
+    public static function getUserPoints(int $iduser):int|false{
+        try{
+            $query='SELECT points FROM _user WHERE id=:iduser';
+            $pst=self::startquery($query);
+            $pst->bindValue('iduser',$iduser);
+            $pst->execute();
+            if($row=$pst->fetch())
+                return intval($row['points']);
+            else 
+                return false;
+        }
+        catch(PDOException $pdoe){
+            if($pdoe->getCode()===23505)
+                return false;
+            else throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
+        }
+
+    }
+
 
     public static function updateUser(int $id,string $pseudo,string $adress,string $town):bool{
         try{

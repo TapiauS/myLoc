@@ -47,7 +47,7 @@
                             <a class="nav-link" href="/myLoc/index.php?target=allitem">Tout les objets</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/myLoc/index.php">Acceuil</a>
+                            <a class="nav-link" href="/myLoc/index.php">Accueil</a>
                         </li>
                         <?php if(isset($_GET['target'])&&$_GET['target']==='allitem'):?>
                             <li class="nav-item dropdown">

@@ -30,7 +30,7 @@ CREATE TABLE _user(
 CREATE TABLE item(
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
-    desription VARCHAR,
+    desription TEXT,
     picture_path VARCHAR ,
     id_category_item INT NOT NULL,
     id_user INT NOT NULL,

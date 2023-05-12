@@ -1,4 +1,4 @@
-
+const points=document.querySelector('#points');
 const itemdisplayer=document.querySelector('#carddisplayer');
 
 
@@ -59,3 +59,7 @@ const makeitemcards=item=>{
 fetch('/myLoc/itemEndPoints.php?filter=myself').
     then(response=>response.json()).
     then(data=>data.forEach(item=>makeitemcards(item)))
+
+fetch('userEndPoints.php?points=true').
+    then(response=>response.json()).
+    then(data=>points.innerText='Points:'+data.points);

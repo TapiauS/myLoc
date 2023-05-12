@@ -12,8 +12,11 @@ class RoleManager extends Manager{
                 return Role::fromName($row['role_name']);
         }
         catch(PDOException $pdoe){
-            //todo gérer
+            if($pdoe->getCode()===23503)
+                return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe,1,1);
         }
     }
-
 }
+

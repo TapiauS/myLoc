@@ -34,6 +34,10 @@ const itemdisplayer=item=>{
     description.className='card-text';
     description.innerText='Description:'+item.description;
     listbody.append(description);
+    const ownerdiv=document.createElement('p');
+    ownerdiv.className='card-text';
+    ownerdiv.innerText='Propriétaire : '+item.owner.pseudo;
+    listbody.append(ownerdiv);
     const borrowlistbody=document.createElement('ul');
     borrowlistbody.className='list-group list-group-flush';
     carddiv.append(borrowlistbody);

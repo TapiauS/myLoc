@@ -2,7 +2,7 @@
 
 class ItemManager extends Manager{
 
-    public static function getAllitems():array{
+    public static function getAllitems():array|false{
         try{
             $query='SELECT * FROM item';
             $pst=self::startquery($query);
@@ -15,9 +15,13 @@ class ItemManager extends Manager{
             return $retour;
         }
         catch(PDOException $pdoe){
-            //TODO gérer
+            if($pdoe->getCode()===23503)
+                return false;
+            else
+                throw new MylocManagerException($pdoe->getMessage(),$pdoe);
         }
     }
+
 
     public static function getItem(int $id):Item{
         try{
@@ -71,16 +75,21 @@ class ItemManager extends Manager{
         }
     }
 
-    public static function updateItem(string $name,?string $description,int $idCategorie,?string $picturePath,int $id):Item|false{
+    public static function updateItem(string $name,?string $description,int $idCategorie,int $iduser,?string $picturePath,int $id):Item|false{
         try{
-            $query='UPDATE item SET name=:name,description=:description,picture_path=:picturepath,id_category_item=;idcat WHERE id=:id AND id_user=:iduser';
+            $query='UPDATE item SET name=:name,description=:description,picture_path=:picturepath,id_category_item=:idcat WHERE id=:id AND id_user=:iduser RETURNING id';
             $pst=self::startquery($query);
             $pst->bindValue('name',$name);
+            $pst->bindValue('iduser',$iduser);
+            $pst->bindValue('id',$id);
             $pst->bindValue('description',$description);
             $pst->bindValue('picturepath',$picturePath);
             $pst->bindValue('idcat',$idCategorie);
+            $pst->execute();
             if($row=$pst->fetch())
                 return self::getItem($row['id']);
+            else
+                return false;
         }
         catch(PDOException $pdoe){
             if($pdoe->getCode()===23503)

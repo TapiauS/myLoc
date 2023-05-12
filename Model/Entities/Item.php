@@ -87,7 +87,7 @@ class Item implements JsonSerializable{
      */
     public function setDescription(?String $description): self
     {
-        $this->description = $description;
+        $this->description = htmlspecialchars_decode($description);
 
         return $this;
     }
@@ -168,7 +168,7 @@ class Item implements JsonSerializable{
     {
         return [
             'id'=>$this->id,
-            'idowner'=>$this->owner->getId(),
+            'owner'=>$this->owner,
             'name'=>$this->name,
             'description'=>$this->description,
             'categorie'=>$this->category,

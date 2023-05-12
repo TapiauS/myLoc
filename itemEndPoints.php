@@ -11,29 +11,46 @@ foreach (glob("$manager/*.php") as $filename) {
 }
 session_start();
 
-if(isset($_GET['filter'])&&$_GET['filter']==='myself'&&isset($_SESSION['user'])){
-    $allitems=ItemManager::getAllitems();
-    $items=[];
-    foreach($allitems as $key=>$item){
-        if($item->getOwner()->getId()===$_SESSION['user']->getId())
-            array_push($items,$item); 
+$allitems=ItemManager::getAllitems();
+$items=[];
+if(isset($_GET['filter'])){
+    $filter=$_GET['filter'];
+
+    switch($filter){
+        case 'myself':
+            if(isset($_SESSION['user'])){
+                foreach($allitems as $key=>$item){
+                    if($item->getOwner()->getId()===$_SESSION['user']->getId())
+                        array_push($items,$item); 
+                }
+            }
+            break;
+        case 'oneuser':
+            if(isset($_GET['iduser'])){
+                foreach($allitems as $key=>$item){
+                    if($item->getOwner()->getId()===intval($_GET['iduser']))
+                        array_push($items,$item); 
+                }
+            }
+            break;
+        case 'oneitem':
+            if(isset($_GET['iditem'])){
+                foreach($allitems as $key=>$item){
+                    if($item->getId()===intval($_GET['iditem']))
+                        array_push($items,$item); 
+                }
+            }
+            break;
+        default;
     }
     header('Content-Type: application/json');
     echo json_encode($items);
     exit;
 }
-
-if(isset($_GET['filter'])&&isset($_GET['iduser'])&&$_GET['filter']==='oneuser'):
-    $allitems=ItemManager::getAllitems();
-    $items=[];
-    foreach($allitems as $key=>$item){
-        if($item->getOwner()->getId()===intval($_GET['iduser']))
-            array_push($items,$item); 
-    }
-    header('Content-Type: application/json');
-    echo json_encode($items);
-else:
-    $allitems=ItemManager::getAllitems();
+else{
     header('Content-Type: application/json');
     echo json_encode($allitems);
-endif;
+    exit;
+}
+
+

@@ -13,7 +13,7 @@ function isavailable(Item $item,DateTime $start,DateTime $end):bool{
     }
     $borrows=BorrowManager::getAllBorrow($item);
     foreach($borrows as $borrow){
-        if($borrow->getStart()<=$start && $start<=$borrow->getEnd() || $borrow->getStart()<=$end && $end<=$borrow->getEnd()||$borrow->getStart()>=$start&&$borrow->getEnd()<=$end):
+        if(!($borrow->getEnd()<=$start || $end<=$borrow->getStart())):
             return false;
         endif;
     }

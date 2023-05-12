@@ -50,6 +50,9 @@ try{
                 case 'submitborrow':
                     submitBorrow();
                     break;
+                case 'deleteborrow':
+                    deleteBorrow();
+                    break;
                 case 'updateaccount':
                     updateaccount();
                     break;
@@ -68,6 +71,9 @@ try{
                     break;
                 case 'newitem':
                     addItem();
+                    break;
+                case 'updateitem':
+                    updateItem();
                     break;
                 case 'error':
                     error();
