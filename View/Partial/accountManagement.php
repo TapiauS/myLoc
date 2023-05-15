@@ -1,7 +1,7 @@
 <div class='d-flex align-items-center justify-content-center'>
     <div class='row' id='Accountmanagement'>
         <p id='points'>Points <?=$_SESSION['user']->getPoints()?></p>
-        <a href='index.php?target=updateaccount' class='btn btn-primary mt-1'>Mettre a jour ses informations</a>
+        <a href='index.php?target=updateaccount' class='btn btn-primary mt-1'>Mettre à jour ses informations</a>
         <a href='index.php?target=deleteaccount' class='btn btn-primary mt-1'>Supprimer le compte</a>
     </div>
 </div>

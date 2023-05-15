@@ -152,7 +152,7 @@ class User implements JsonSerializable{
      */
     public function setPseudo(String $pseudo): self
     {
-        $this->pseudo = $pseudo;
+        $this->pseudo = htmlspecialchars_decode($pseudo);
 
         return $this;
     }

@@ -14,7 +14,10 @@ session_start();
 try{
     $borrows=[];
     if(!isset($_GET['iditem'])):
-        $borrows=BorrowManager::getBorrowedItem($_SESSION['user']);
+        if(!isset($_GET['you'])&&boolval($_GET['you']))
+            $borrows=BorrowManager::getLandedItem($_SESSION['user']);
+        else
+            $borrows=BorrowManager::getBorrowedItem($_SESSION['user']);
     else:
         $borrows=BorrowManager::getAllBorrow(ItemManager::getItem($_GET['iditem']));
     endif;

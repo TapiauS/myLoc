@@ -30,6 +30,9 @@
                                     <a class="nav-link" href="/myLoc/index.php?target=admincategories">Gerer les catégories</a>
                                 </li>
                             <?php endif;?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/myLoc/index.php?target=waitingborrow"></a>
+                            </li>
                         <?php else: ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="/myLoc/index.php?target=connect">Se Connecter</a>

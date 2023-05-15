@@ -50,6 +50,9 @@ try{
                 case 'submitborrow':
                     submitBorrow();
                     break;
+                case 'waitingborrow':
+                    waitingborrow();
+                    break;
                 case 'deleteborrow':
                     deleteBorrow();
                     break;

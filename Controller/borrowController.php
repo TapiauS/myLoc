@@ -37,6 +37,24 @@ function submitBorrow(){
     endif; 
 }
 
+function validateBorrow(){
+    if(isset($_SESSION['user'])&&isset($_GET['idborrow'])&&isset($_GET['iditem']))
+        BorrowManager::validateBorrow(intval($_GET['idborrow']),intval($_GET['iditem']));
+    else
+        header('Location:index.php?target=error');
+    require_once 'View/waitingBorrow.php';
+}
+
+function unvalidateBorrow(){
+    if(isset($_SESSION['user'])&&isset($_GET['idborrow'])&&isset($_GET['iditem']))
+        BorrowManager::refuseBorrow(intval($_GET['idborrow']),intval($_GET['iditem']));
+    else
+        header('Location:index.php?target=error');
+    require_once 'View/waitingBorrow.php';
+}
+
+
+
 function deleteBorrow(){
     if(isset($_SESSION['user'])&&isset($_GET['idborrow'])):
         $borrow=BorrowManager::getBorrow(intval($_GET['idborrow']));
@@ -48,12 +66,17 @@ function deleteBorrow(){
             else
                 header('Location:index.php?target=error');
         else:
-            // header('Location:index.php?target=error');
+                header('Location:index.php?target=error');
         endif;
     endif;
 }
 
 function displayOneUserBorrow(){
     require_once 'View/allBorrowView.php';
+}
+
+
+function waitingBorrow(){
+    require_once 'View/waitingBorrow.php';
 }
 

@@ -6,10 +6,11 @@ class Borrow implements JsonSerializable{
     private User $borrower;
     private DateTime $start;
     private DateTime $end;
+    private bool $accepted;
 
-    function __construct(int $id,User $borrower,DateTime $start,DateTime $end,Item $item)
+    function __construct(int $id,User $borrower,DateTime $start,DateTime $end,Item $item,bool $accepted=true)
     {
-        $this->setId($id)->setBorrower($borrower)->setStart($start)->setEnd($end)->setItem($item);
+        $this->setId($id)->setBorrower($borrower)->setStart($start)->setEnd($end)->setItem($item)->setAccepted($accepted);
     }
     /**
      * Get the value of item
@@ -138,7 +139,32 @@ class Borrow implements JsonSerializable{
             'item'=>$this->item,
             'borrower'=>$this->borrower,
             'start'=>$this->start->format('Y-m-d'),
-            'end'=>$this->end->format('Y-m-d')
+            'end'=>$this->end->format('Y-m-d'),
+            'accepted'=>$this->accepted
         ];
+    }
+
+    /**
+     * Get the value of accepted
+     *
+     * @return bool
+     */
+    public function getAccepted(): bool
+    {
+        return $this->accepted;
+    }
+
+    /**
+     * Set the value of accepted
+     *
+     * @param bool $accepted
+     *
+     * @return self
+     */
+    public function setAccepted(bool $accepted): self
+    {
+        $this->accepted = $accepted;
+
+        return $this;
     }
 }
